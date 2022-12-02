@@ -3,11 +3,11 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.schemas import User, UserCreate
-from app import services
+from app.services.user_service import user_service
 
 router = APIRouter()
 
 
 @router.post('', response_model=User)
 def create_user(request: UserCreate, db: Session = Depends(get_db)):
-    return services.user.create(request, db)
+    return user_service.create(request, db)

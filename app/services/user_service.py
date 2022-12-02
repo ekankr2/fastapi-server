@@ -14,4 +14,4 @@ class UserService:
         return new_user
 
 
-user = UserService()
+user_service = UserService()
