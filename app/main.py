@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.routers.router import api_router
+from app.api.router import api_router
 
 app = FastAPI(
     title='FastAPI Server',
