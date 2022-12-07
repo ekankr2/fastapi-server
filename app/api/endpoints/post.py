@@ -9,5 +9,5 @@ router = APIRouter()
 
 
 @router.post('', response_model=User)
-def create_user(request: UserCreate, db: Session = Depends(get_db)):
-    return user_service.create(request, db)
+def create(request: UserCreate, db: Session = Depends(get_db)):
+    return user_service.create_user(request, db)
