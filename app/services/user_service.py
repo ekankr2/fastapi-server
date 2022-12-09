@@ -11,7 +11,7 @@ class UserService:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_user(self, request: schemas.UserCreate):
+    def create_user(self, request: schemas.UserCreateRequest):
         new_user = User(name=request.name, email=request.email, password=request.password)
         self.db.add(new_user)
         self.db.commit()
