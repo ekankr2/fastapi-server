@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from app.schemas import User, UserCreateRequest
-from app.services.user_service import user_service
+from app.services.user import user_service
 
 router = APIRouter()
 

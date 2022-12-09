@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
@@ -11,5 +11,7 @@ class User(Base):
     name = Column(String)
     email = Column(String)
     password = Column(String)
+    is_active = Column(Boolean)
+    is_superuser = Column(Boolean)
 
     posts = relationship('Post', back_populates="creator")
