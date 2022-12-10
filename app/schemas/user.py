@@ -6,11 +6,12 @@ from pydantic import BaseModel, EmailStr, Field
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
-    is_superuser: bool = False
+    is_superuser: Optional[bool] = False
     name: Optional[str] = None
 
 
 class UserCreateRequest(UserBase):
+    email: EmailStr
     password: str
     name: str = Field(..., min_length=1, max_length=30)
 
