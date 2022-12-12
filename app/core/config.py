@@ -8,11 +8,10 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = os.getenv('ENVIRONMENT')
     DB_URL: str = os.getenv('DB_URL')
     API_PREFIX: str = os.getenv('API_PREFIX')
-    DATABASE_HOST: str = os.getenv('DATABASE_HOST')
-    DATABASE_PORT: str = os.getenv('DATABASE_PORT')
-    DATABASE_USERNAME: str = os.getenv('DATABASE_USERNAME')
-    DATABASE_PASSWORD: str = os.getenv('DATABASE_PASSWORD')
-    DATABASE_NAME: str = os.getenv('DATABASE_NAME')
+    POSTGRES_SERVER: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
     JWT_SECRET_ACCESS_KEY: str = os.getenv('JWT_SECRET_ACCESS_KEY')
     JWT_SECRET_REFRESH_KEY: str = os.getenv('JWT_SECRET_REFRESH_KEY')
 
@@ -24,15 +23,14 @@ class Settings(BaseSettings):
             return v
         return PostgresDsn.build(
             scheme="postgresql",
-            user=values.get("DATABASE_USERNAME"),
-            password=values.get("DATABASE_PASSWORD"),
-            host=values.get("DATABASE_HOST"),
-            port=values.get("DATABASE_PORT"),
-            path=f"/{values.get('DATABASE_NAME') or ''}",
+            user=values.get("POSTGRES_USER"),
+            password=values.get("POSTGRES_PASSWORD"),
+            host=values.get("POSTGRES_SERVER"),
+            path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
     class Config:
-        env_file = ".env.local"
+        env_file = ".env"
 
 
 settings = Settings()
