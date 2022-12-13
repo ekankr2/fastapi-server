@@ -21,4 +21,4 @@ class Post(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    comments = relationship("PostComment", back_populates="post")
+    post_comments = relationship("PostComment", back_populates="parent_post")

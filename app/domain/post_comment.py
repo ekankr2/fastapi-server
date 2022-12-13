@@ -16,5 +16,5 @@ class PostComment(Base):
     creator = relationship("User", back_populates="comments")
 
     post_id = Column(Integer, ForeignKey('post.id'))
-    post = relationship("Post", back_populates="comments")
+    parent_post = relationship("Post", back_populates="post_comments")
 
