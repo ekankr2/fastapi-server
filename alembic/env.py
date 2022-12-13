@@ -1,6 +1,5 @@
 import os
 from logging.config import fileConfig
-from os.path import join, dirname
 
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
