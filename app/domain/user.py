@@ -20,4 +20,3 @@ class User(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     posts = relationship('Post', back_populates="creator")
-    comments = relationship('PostComment', back_populates="creator")

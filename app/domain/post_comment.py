@@ -13,7 +13,7 @@ class PostComment(Base):
     text = Column(String)
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id'))
-    creator = relationship("User", back_populates="comments")
+    creator = relationship("User")
 
     post_id = Column(Integer, ForeignKey('post.id'))
     parent_post = relationship("Post", back_populates="post_comments")
