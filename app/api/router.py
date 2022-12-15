@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-from fastapi_utils.inferring_router import InferringRouter
 
-from app.api.endpoints import user, post, auth
+from app.api.endpoints import auth
 
 api_router = APIRouter()
 
