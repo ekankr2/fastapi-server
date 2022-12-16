@@ -7,21 +7,15 @@ from app.db.session import get_db
 from app.schemas import User, UserCreateRequest
 from app.services import user_service
 
-
 router = InferringRouter()
 
 
 @cbv(router)
 class AuthController:
-    # Depends() is only callable in the @router functions
+    # Notice that Depends() is only callable in the @router functions
     session: Session = Depends(get_db)
 
-    @router.post(
-        '/register',
-        response_model=User,
-        status_code=status.HTTP_201_CREATED,
-        summary="User sign up",
-    )
+    @router.post('/register', response_model=User, status_code=status.HTTP_201_CREATED, summary="User sign up")
     def register(self, request: UserCreateRequest):
         user = user_service.get_by_email(request.email, self.session)
         if user:

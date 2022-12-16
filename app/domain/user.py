@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean, DateTime, func
+from sqlalchemy import Column, String, Boolean, DateTime, func, event
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -20,3 +20,8 @@ class User(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     posts = relationship('Post', back_populates="creator")
+
+
+@event.listens_for(User, "before_insert")
+def hash_password(mapper, connection, target):
+    target.password = target.password.lower()
