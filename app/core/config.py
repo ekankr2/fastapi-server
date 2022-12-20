@@ -1,4 +1,5 @@
 import os
+import secrets
 from typing import Optional, Dict, Any
 
 from pydantic import BaseSettings, PostgresDsn, validator
@@ -6,8 +7,11 @@ from pydantic import BaseSettings, PostgresDsn, validator
 
 class Settings(BaseSettings):
     ENVIRONMENT: str = os.getenv('ENVIRONMENT')
+    SECRET_KEY: str = secrets.token_urlsafe(32)
+    # 60 minutes * 24 hours * 8 days = 8 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
     DB_URL: str = os.getenv('DB_URL')
-    API_PREFIX: str = os.getenv('API_PREFIX')
+    API_PREFIX: str = "/api"
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str

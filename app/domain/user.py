@@ -4,6 +4,7 @@ from sqlalchemy import Column, String, Boolean, DateTime, func, event
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
+from app.core.security import get_password_hash
 from app.db.base_class import Base
 
 
@@ -23,5 +24,5 @@ class User(Base):
 
 
 @event.listens_for(User, "before_insert")
-def hash_password(mapper, connection, target):
-    target.password = target.password.lower()
+def hash_password(_mapper, _connection, target):
+    target.password = get_password_hash(target.password)
