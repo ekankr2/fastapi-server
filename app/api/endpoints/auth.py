@@ -19,9 +19,10 @@ router = InferringRouter()
 
 @cbv(router)
 class AuthController:
-    db: Session = Depends(get_db)
-    user_service = UserService()
-    auth_service = AuthService()
+    def __init__(self, db: Session = Depends(get_db)):
+        self.db = db
+        self.user_service = UserService()
+        self.auth_service = AuthService()
 
     @router.post('/register', response_model=schemas.User, status_code=status.HTTP_201_CREATED,
                  summary="User sign up")
@@ -34,15 +35,15 @@ class AuthController:
             )
         return self.user_service.create_user(self.db, request=request)
 
-    # @router.post('/login', response_model=schemas.Token, status_code=status.HTTP_200_OK, summary="User Login")
-    # def login(self, form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
-    #     user = self.auth_service.authenticate(self.session, email=form_data.username, password=form_data.password)
-    #     if not user:
-    #         raise HTTPException(status_code=400, detail="Incorrect email or password")
-    #     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    #     return {
-    #         "access_token": security.create_access_token(
-    #             user.id, expires_delta=access_token_expires
-    #         ),
-    #         "token_type": "bearer",
-    #     }
+    @router.post('/login', response_model=schemas.Token, status_code=status.HTTP_200_OK, summary="User Login")
+    def login(self, form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
+        user = self.auth_service.authenticate(self.db, email=form_data.username, password=form_data.password)
+        if not user:
+            raise HTTPException(status_code=400, detail="Incorrect email or password")
+        access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        return {
+            "access_token": security.create_access_token(
+                user.id, expires_delta=access_token_expires
+            ),
+            "token_type": "bearer",
+        }
