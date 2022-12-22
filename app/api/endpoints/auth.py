@@ -10,7 +10,8 @@ from sqlalchemy.orm import Session
 from app import schemas
 from app.core import security
 from app.core.config import settings
-from app.db.session import get_db
+from app.core import dependencies
+from app.domain import User
 from app.services.user_service import UserService
 from app.services.auth_service import AuthService
 
@@ -19,7 +20,7 @@ router = InferringRouter()
 
 @cbv(router)
 class AuthController:
-    def __init__(self, db: Session = Depends(get_db)):
+    def __init__(self, db: Session = Depends(dependencies.get_db)):
         self.db = db
         self.user_service = UserService()
         self.auth_service = AuthService()
@@ -47,3 +48,7 @@ class AuthController:
             ),
             "token_type": "bearer",
         }
+
+    @router.post('/test-token', response_model=schemas.User)
+    def test_token(self, current_user: User = Depends(dependencies.get_current_user)):
+        return current_user
