@@ -7,7 +7,7 @@ from app.domain.user import User
 
 
 class UserService:
-    def create_user(self, db: Session, request: schemas.UserCreateRequest) -> User:
+    def create_user(self, db: Session, request: schemas.UserCreate) -> User:
         new_user = User(name=request.name, email=request.email, hashed_password=request.password,
                         is_active=request.is_active, is_superuser=request.is_superuser)
         db.add(new_user)

@@ -1,13 +1,23 @@
-from fastapi import APIRouter, Depends
+from fastapi import Depends, status
+from fastapi_utils.cbv import cbv
+from fastapi_utils.inferring_router import InferringRouter
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.schemas import User, UserCreateRequest
-# from app.services.user import user_service
+from app import schemas
+from app.core import dependencies
+from app.domain import User
+from app.services import UserService, PostService
 
-router = APIRouter()
+router = InferringRouter()
 
 
-# @router.post('', response_model=User)
-# def create(request: UserCreateRequest, db: Session = Depends(get_db)):
-#     return user_service.create_user(request, db)
+@cbv(router)
+class PostController:
+    def __init__(self, db: Session = Depends(dependencies.get_db)):
+        self.db = db
+        self.user_service = UserService()
+        self.post_service = PostService()
+
+    @router.post('/', response_model=schemas.Post, status_code=status.HTTP_201_CREATED)
+    def create(self, request: schemas.PostCreate, current_user: User = Depends(dependencies.get_current_user)):
+        return self.post_service.create_post(db=self.db, request=request, user_id=current_user.id)

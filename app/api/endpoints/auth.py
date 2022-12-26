@@ -12,8 +12,7 @@ from app.core import security
 from app.core.config import settings
 from app.core import dependencies
 from app.domain import User
-from app.services.user_service import UserService
-from app.services.auth_service import AuthService
+from app.services import AuthService, UserService
 
 router = InferringRouter()
 
@@ -25,9 +24,8 @@ class AuthController:
         self.user_service = UserService()
         self.auth_service = AuthService()
 
-    @router.post('/register', response_model=schemas.User, status_code=status.HTTP_201_CREATED,
-                 summary="User sign up")
-    def register(self, request: schemas.UserCreateRequest):
+    @router.post('/register', response_model=schemas.User, status_code=status.HTTP_201_CREATED, summary="User sign up")
+    def register(self, request: schemas.UserCreate):
         user = self.user_service.get_by_email(self.db, email=request.email)
         if user:
             raise HTTPException(

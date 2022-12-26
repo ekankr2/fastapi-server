@@ -12,7 +12,7 @@ class UserBase(BaseModel):
 
 
 # Properties to receive via API on creation
-class UserCreateRequest(UserBase):
+class UserCreate(UserBase):
     email: EmailStr
     password: str
     name: str = Field(..., min_length=1, max_length=30)
