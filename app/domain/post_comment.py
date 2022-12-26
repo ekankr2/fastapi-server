@@ -15,6 +15,6 @@ class PostComment(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id'))
     creator = relationship("User")
 
-    post_id = Column(Integer, ForeignKey('post.id'))
+    post_id = Column(UUID(as_uuid=True), ForeignKey('post.id'))
     parent_post = relationship("Post", back_populates="post_comments")
 
