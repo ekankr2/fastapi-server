@@ -7,7 +7,7 @@ from fastapi_restful.cbv import cbv
 from sqlalchemy.orm import Session
 
 from app import schemas
-from app.core import dependencies
+from app.api import dependencies
 from app.core import security
 from app.core.config import settings
 from app.domain import User

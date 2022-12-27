@@ -3,7 +3,7 @@ from fastapi_restful.cbv import cbv
 from sqlalchemy.orm import Session
 
 from app import schemas
-from app.core import dependencies
+from app.api import dependencies
 from app.domain import User
 from app.services import UserService, PostService
 
