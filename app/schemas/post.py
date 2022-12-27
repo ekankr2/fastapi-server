@@ -7,15 +7,11 @@ from pydantic import BaseModel
 class PostBase(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
-    view: Optional[int] = None
-    like: Optional[int] = None
 
 
 class PostCreate(PostBase):
     title: str
     content: str
-    view = 0
-    like = 0
 
 
 class PostInDBBase(PostBase):
