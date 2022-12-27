@@ -1,20 +1,19 @@
 from datetime import timedelta
 from typing import Any
 
-from fastapi import status, Depends, HTTPException
+from fastapi import status, Depends, HTTPException, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi_utils.cbv import cbv
-from fastapi_utils.inferring_router import InferringRouter
+from fastapi_restful.cbv import cbv
 from sqlalchemy.orm import Session
 
 from app import schemas
+from app.core import dependencies
 from app.core import security
 from app.core.config import settings
-from app.core import dependencies
 from app.domain import User
 from app.services import AuthService, UserService
 
-router = InferringRouter()
+router = APIRouter()
 
 
 @cbv(router)
