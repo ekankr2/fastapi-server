@@ -11,7 +11,7 @@ from app.api import dependencies
 from app.core import security
 from app.core.config import settings
 from app.domain import User
-from app.services import AuthService, UserService
+from app.services import user_service
 
 router = APIRouter()
 
@@ -20,18 +20,16 @@ router = APIRouter()
 class AuthController:
     def __init__(self, db: Session = Depends(dependencies.get_db)):
         self.db = db
-        self.user_service = UserService()
-        self.auth_service = AuthService()
 
     @router.post('/register', response_model=schemas.User, status_code=status.HTTP_201_CREATED, summary="User sign up")
     def register(self, request: schemas.UserCreate):
-        user = self.user_service.get_by_email(self.db, email=request.email)
+        user = user_service.get_by_email(self.db, email=request.email)
         if user:
             raise HTTPException(
                 status_code=400,
                 detail="The user with this username already exists."
             )
-        return self.user_service.create_user(self.db, request=request)
+        return user_service.create_user(self.db, request=request)
 
     @router.post('/login', response_model=schemas.Token, status_code=status.HTTP_200_OK, summary="User Login")
     def login(self, form_data: OAuth2PasswordRequestForm = Depends()) -> Any:

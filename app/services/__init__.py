@@ -1,3 +1,3 @@
-from .auth_service import AuthService
-from .user_service import UserService
-from .post_service import PostService
+from .auth_service import auth_service
+from .user_service import user_service
+from .post_service import post_service
