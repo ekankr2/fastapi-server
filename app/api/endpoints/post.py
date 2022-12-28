@@ -22,6 +22,5 @@ class PostController:
         return post_service.create_post(db=self.db, request=request, user_id=current_user.id)
 
     @router.get('/', response_model=List[schemas.Post], summary="Get List of Posts")
-    def get_posts(self, skip: int = 0, limit: int = 100, current_user: User = Depends(dependencies.get_current_user)):
-        return 'ok'
-
+    def get_posts(self, skip: int = 0, limit: int = 100):
+        return post_service.get_multi(db=self.db, skip=skip, limit=limit)
