@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -12,9 +12,9 @@ class PostComment(Base):
     depth = Column(Integer)
     text = Column(String)
 
-    user_id = Column(UUID(as_uuid=True), ForeignKey('user.id'))
+    user_id = Column(Text, ForeignKey('user.id'))
     creator = relationship("User")
 
-    post_id = Column(UUID(as_uuid=True), ForeignKey('post.id'))
+    post_id = Column(Text, ForeignKey('post.id'))
     parent_post = relationship("Post", back_populates="post_comments")
 
