@@ -29,9 +29,6 @@ def db(engine):
 
     session.close()
 
-# @pytest.fixture(scope="session")
-# def db() -> Generator:
-#     yield SessionLocal()
 
 @pytest.fixture(scope="module")
 def client() -> Generator:
