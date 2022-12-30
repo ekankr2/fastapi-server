@@ -6,20 +6,28 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
 
 from app.core.config import settings
+from app.db.base_class import Base
 from app.db.session import SessionLocal
 from app.main import app
 
-DATABASE_URI= 'sqlite:///./test.db'
+
 
 
 @pytest.fixture(scope="session")
-def db() -> Generator:
-    test_engine = create_engine(DATABASE_URI, pool_pre_ping=True)
-    TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
-    Base = declarative_base()
-    Base.metadata.create_all(test_engine)
-    yield TestSessionLocal()
-    Base.metadata.drop_all()
+def engine():
+    print("TestCase: Using sqlite database")
+    return create_engine("sqlite:///.test.db", echo=False)
+
+
+@pytest.fixture(scope="session")
+def db(engine):
+    sessionmaker_ = sessionmaker(bind=engine)
+    session = sessionmaker_()
+    Base.metadata.create_all(engine)
+
+    yield session
+
+    session.close()
 
 # @pytest.fixture(scope="session")
 # def db() -> Generator:
