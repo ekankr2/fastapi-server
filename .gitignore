@@ -3,7 +3,8 @@
 
 .env
 .env.production
-/test.db
 
 
 /.pytest_cache/
+/.test.db
+
