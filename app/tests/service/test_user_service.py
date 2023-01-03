@@ -38,3 +38,6 @@ def test_get_user_by_email(db: Session):
     assert user_2
     assert user.email == user_2.email
     assert jsonable_encoder(user) == jsonable_encoder(user_2)
+
+
+def test_get_posts_by_user_id(db: Session):

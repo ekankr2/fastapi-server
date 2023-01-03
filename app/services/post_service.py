@@ -17,4 +17,6 @@ class PostService(BaseService[Post, PostCreate]):
         return new_post
 
 
+
+
 post_service = PostService(Post)
