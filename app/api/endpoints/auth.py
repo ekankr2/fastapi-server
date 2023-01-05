@@ -33,7 +33,7 @@ class AuthController:
 
     @router.post('/login', response_model=schemas.Token, status_code=status.HTTP_200_OK, summary="User Login")
     def login(self, form_data: OAuth2PasswordRequestForm = Depends()) -> Any:
-        user = auth_service.authenticate(self.db, email=form_data.username, password=form_data.password)
+        user = auth_service.authenticate(db=self.db, email=form_data.username, password=form_data.password)
         if not user:
             raise HTTPException(status_code=400, detail="Incorrect email or password")
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
