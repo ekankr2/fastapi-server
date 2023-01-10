@@ -4,4 +4,4 @@ FastApi board REST API Server
 
 ## about Alembic
 
-[Alembic 설명](https://blog.neonkid.xyz/257)
+[Korean](https://blog.neonkid.xyz/257)
