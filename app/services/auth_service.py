@@ -9,7 +9,7 @@ from ..core.security import verify_password
 
 class AuthService:
 
-    def authenticate(db: Session, email: str, password: str, ) -> Optional[User]:
+    def authenticate(self, db: Session, email: str, password: str) -> Optional[User]:
         user = user_service.get_by_email(db=db, email=email)
         if not user:
             return None
