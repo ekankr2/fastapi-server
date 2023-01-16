@@ -35,7 +35,7 @@ def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    user = user_service.get(db, token_data.sub)
+    user = user_service.get_by_id(db, token_data.sub)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return user

@@ -22,7 +22,7 @@ def test_get_user(db: Session):
     password = random_lower_string()
     user_in = UserCreate(email=email, password=password, name=name)
     user = user_service.create_user(db, request=user_in)
-    user_2 = user_service.get(db, id=user.id)
+    user_2 = user_service.get_by_id(db, id=user.id)
     assert user_2
     assert user.email == user_2.email
     assert jsonable_encoder(user) == jsonable_encoder(user_2)
@@ -41,3 +41,4 @@ def test_get_user_by_email(db: Session):
 
 
 def test_get_posts_by_user_id(db: Session):
+    pass
