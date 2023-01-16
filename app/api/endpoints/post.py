@@ -24,3 +24,7 @@ class PostController:
     @router.get('/', response_model=List[schemas.Post], summary="Get All Posts")
     def get_posts(self, skip: int = 0, limit: int = 100):
         return post_service.get_multi(db=self.db, skip=skip, limit=limit)
+
+    @router.delete('/{id}', response_model=schemas.PostDeleteResponse)
+    def delete_post(self, id: str, current_user: User = Depends(dependencies.get_current_user)):
+        return post_service.delete_post(db=self.db, post_id=id, user_id=current_user.id)

@@ -9,9 +9,16 @@ class PostBase(BaseModel):
     content: Optional[str] = None
 
 
+# Properties to receive on post create
 class PostCreate(PostBase):
     title: str
     content: str
+
+
+# Properties to return on post delete
+class PostDeleteResponse(BaseModel):
+    post_id: str
+    deleted: bool
 
 
 class PostInDBBase(PostBase):
